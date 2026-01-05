@@ -1,0 +1,20 @@
+description: Monthly amount of Hogares de la Patria / Bono Único Familiar
+metadata:
+  label: Hogares de la Patria bonus (monthly)
+  unit: currency-VES
+  period: month
+  reference:
+    - title: Decreto 1.149 - Gran Misión Hogares de la Patria
+      href: https://tugacetaoficial.com/leyes/reglamento-ley-organica-de-misiones-grandes-misiones-y-micro-misiones/
+    - title: Gaceta Oficial 40.465 (31 julio 2014)
+      href: https://www.asambleanacional.gob.ve/
+    - title: Bono Único Familiar (noviembre 2025)
+      href: https://blog.patria.org.ve/bono-unico-familiar-noviembre-2025/
+values:
+  2014-08-01: 0  # Program created
+  2016-03-01: 14500  # Decreto 2.267
+  2020-01-01: 500  # Post-reconversion
+  2024-01-01: 2500
+  2025-01-01: 3330
+  2025-12-01: 3705
+  2026-01-01: 3705

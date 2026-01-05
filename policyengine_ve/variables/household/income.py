@@ -74,6 +74,7 @@ class person_benefits(Variable):
         "gran_mision_amor_mayor",
         "bono_escolaridad",
         "bono_lactancia",
+        "hogares_patria_bonus",
     ]
 
 

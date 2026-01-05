@@ -1,0 +1,28 @@
+# Tests for Hogares de la Patria / Bono Único Familiar
+# ~3,705 Bs/month for eligible low-income families (soft scoring, not hard threshold)
+# Eligibility is discretionary based on Sistema Patria socioeconomic assessment
+# Reference: https://blog.patria.org.ve/bono-unico-familiar-noviembre-2025/
+
+- name: Eligible family receives Hogares de la Patria bonus
+  period: 2025
+  input:
+    is_hogares_patria_eligible: true
+    has_carnet_patria: true
+  output:
+    hogares_patria_bonus: 39960  # 3330 * 12 (2025 rate)
+
+- name: Ineligible family gets nothing
+  period: 2025
+  input:
+    is_hogares_patria_eligible: false
+    has_carnet_patria: true
+  output:
+    hogares_patria_bonus: 0
+
+- name: Eligible but no Carnet gets nothing
+  period: 2025
+  input:
+    is_hogares_patria_eligible: true
+    has_carnet_patria: false
+  output:
+    hogares_patria_bonus: 0
