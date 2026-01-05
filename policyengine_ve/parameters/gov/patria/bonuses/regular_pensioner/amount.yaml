@@ -1,0 +1,14 @@
+description: Venezuela provides this annual bonus to regular pensioners who hold the Carnet de la Patria.
+metadata:
+  unit: currency-VES
+  period: year
+  label: Regular pensioner annual bonus
+  reference:
+    - title: Venezuela Maduro Govt Announces May Day Bonus Increase
+      href: https://venezuelanalysis.com/news/venezuela-maduro-govt-announces-may-day-bonus-increase-maintains-wage-freeze/
+    - title: Venezuela's Minimum Comprehensive Income Announcements
+      href: https://misionverdad.com/english/venezuelas-minimum-comprehensive-income-announcements-thorough-reading
+
+values:
+  # $50/month x 12 months x 36 VES/USD = 21,600 VES/year
+  2025-01-01: 21600

@@ -1,0 +1,12 @@
+description: IVSS applies this rate to employee earnings for social security contributions.
+values:
+  2018-01-01: 0.04  # 4% employee contribution rate
+metadata:
+  unit: /1
+  period: year
+  label: IVSS employee contribution rate
+  reference:
+    - title: Social Security Programs Throughout the World - Venezuela
+      href: https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/venezuela.html
+    - title: CloudPay Venezuela Payroll Guide
+      href: https://www.cloudpay.com/payroll-guide/venezuela-payroll-and-benefits-guide/

@@ -1,0 +1,15 @@
+description: Venezuela provides this annual bonus to public sector workers who hold the Carnet de la Patria, combining the Bono de Guerra Economica and food bonus.
+metadata:
+  unit: currency-VES
+  period: year
+  label: Public sector worker annual bonus
+  reference:
+    - title: Venezuela Maduro Govt Announces May Day Bonus Increase
+      href: https://venezuelanalysis.com/news/venezuela-maduro-govt-announces-may-day-bonus-increase-maintains-wage-freeze/
+    - title: Venezuela's Minimum Comprehensive Income Announcements
+      href: https://misionverdad.com/english/venezuelas-minimum-comprehensive-income-announcements-thorough-reading
+
+values:
+  # $120/month (guerra economica) + $40/month (food) = $160/month
+  # $160/month x 12 months x 36 VES/USD = 69,120 VES/year
+  2025-01-01: 69120

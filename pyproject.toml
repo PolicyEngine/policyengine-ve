@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "policyengine-ve"
+version = "0.1.0"
+description = "PolicyEngine Venezuela tax-benefit microsimulation model"
+readme = "README.md"
+license = {text = "AGPL-3.0"}
+authors = [
+    {name = "PolicyEngine", email = "hello@policyengine.org"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "policyengine-core>=3.0.0",
+    "microdf-python>=0.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "jupyter>=1.0.0",
+    "plotly>=5.0.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["policyengine_ve*"]
+
+[tool.black]
+line-length = 79

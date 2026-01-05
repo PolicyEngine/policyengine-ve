@@ -1,0 +1,12 @@
+description: Venezuela pays eligible Gran Mision Amor Mayor beneficiaries this monthly amount, equal to the legal minimum wage.
+values:
+  2022-03-01: 130
+metadata:
+  unit: currency-VES
+  period: month
+  label: Monthly benefit amount
+  reference:
+    - title: "Social Security Programs Throughout the World: The Americas, 2019 - Venezuela"
+      href: https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/venezuela.html
+    - title: Venezuela Minimum Monthly Wages
+      href: https://tradingeconomics.com/venezuela/minimum-wages

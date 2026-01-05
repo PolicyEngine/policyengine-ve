@@ -1,0 +1,12 @@
+description: Tax Unit (Unidad Tributaria) value for tax calculations
+values:
+  2022-01-01: 0.40
+  2023-01-01: 9
+  2025-01-01: 43
+metadata:
+  unit: currency-VES
+  period: year
+  label: Tax Unit (UT)
+  reference:
+    - title: PWC Venezuela Tax Summary
+      href: https://taxsummaries.pwc.com/venezuela/individual/taxes-on-personal-income

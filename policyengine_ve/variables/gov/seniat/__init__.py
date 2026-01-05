@@ -1,0 +1,1 @@
+# SENIAT (tax authority) variables

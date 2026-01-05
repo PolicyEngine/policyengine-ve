@@ -1,0 +1,59 @@
+description: SENIAT provides deduction amounts for each income tax bracket, expressed in Tax Units (Unidad Tributaria).
+metadata:
+  unit: currency-VES-TU
+  period: year
+  label: Personal income tax deduction scale
+  threshold_unit: currency-VES-TU
+  amount_unit: currency-VES-TU
+  reference:
+    - title: PWC Venezuela Tax Summary - Taxes on personal income
+      href: https://taxsummaries.pwc.com/venezuela/individual/taxes-on-personal-income
+brackets:
+  - threshold:
+      values:
+        2000-01-01: 0
+    amount:
+      values:
+        2000-01-01: 0
+  - threshold:
+      values:
+        2000-01-01: 1000
+    amount:
+      values:
+        2000-01-01: 30
+  - threshold:
+      values:
+        2000-01-01: 1500
+    amount:
+      values:
+        2000-01-01: 75
+  - threshold:
+      values:
+        2000-01-01: 2000
+    amount:
+      values:
+        2000-01-01: 155
+  - threshold:
+      values:
+        2000-01-01: 2500
+    amount:
+      values:
+        2000-01-01: 255
+  - threshold:
+      values:
+        2000-01-01: 3000
+    amount:
+      values:
+        2000-01-01: 375
+  - threshold:
+      values:
+        2000-01-01: 4000
+    amount:
+      values:
+        2000-01-01: 575
+  - threshold:
+      values:
+        2000-01-01: 6000
+    amount:
+      values:
+        2000-01-01: 875

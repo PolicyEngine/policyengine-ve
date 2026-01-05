@@ -1,0 +1,10 @@
+description: Venezuela requires men to be at least this age to receive the Gran Mision Amor Mayor social pension.
+values:
+  2011-12-01: 60
+metadata:
+  unit: year
+  period: year
+  label: Male age threshold
+  reference:
+    - title: "Social Security Programs Throughout the World: The Americas, 2019 - Venezuela"
+      href: https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/venezuela.html

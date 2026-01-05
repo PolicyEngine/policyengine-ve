@@ -1,0 +1,72 @@
+# Tests for Sistema Patria bonus programs
+# Reference: https://venezuelanalysis.com/news/venezuela-maduro-govt-announces-may-day-bonus-increase-maintains-wage-freeze/
+# Reference: https://misionverdad.com/english/venezuelas-minimum-comprehensive-income-announcements-thorough-reading
+#
+# Bonus amounts as of May 2025 (1 USD = 36 VES):
+# - Public sector workers: $120 (guerra economica) + $40 (food) = $160/month = 69,120 VES/year
+# - Public sector retirees: $112/month = 48,384 VES/year
+# - Regular pensioners: $50/month = 21,600 VES/year
+
+- name: No bonus without Carnet de la Patria
+  period: 2025
+  input:
+    has_carnet_patria: false
+    is_public_sector: true
+    is_employed: true
+  output:
+    sistema_patria_bonus: 0
+
+- name: No bonus for private sector worker with carnet
+  period: 2025
+  input:
+    has_carnet_patria: true
+    is_public_sector: false
+    is_employed: true
+  output:
+    sistema_patria_bonus: 0
+
+- name: Public sector worker receives full bonus
+  period: 2025
+  input:
+    has_carnet_patria: true
+    is_public_sector: true
+    is_employed: true
+  output:
+    sistema_patria_bonus: 69120  # $160/month x 12 months x 36 VES
+
+- name: Public sector retiree receives retiree bonus
+  period: 2025
+  input:
+    has_carnet_patria: true
+    is_retired: true
+    was_public_sector_retiree: true
+  output:
+    sistema_patria_bonus: 48384  # $112/month x 12 months x 36 VES
+
+- name: Regular pensioner receives pensioner bonus
+  period: 2025
+  input:
+    has_carnet_patria: true
+    is_retired: true
+    was_public_sector_retiree: false
+  output:
+    sistema_patria_bonus: 21600  # $50/month x 12 months x 36 VES
+
+- name: No bonus for non-working non-retired person
+  period: 2025
+  input:
+    has_carnet_patria: true
+    is_public_sector: false
+    is_employed: false
+    is_retired: false
+  output:
+    sistema_patria_bonus: 0
+
+- name: Public sector retiree without carnet gets nothing
+  period: 2025
+  input:
+    has_carnet_patria: false
+    is_retired: true
+    was_public_sector_retiree: true
+  output:
+    sistema_patria_bonus: 0

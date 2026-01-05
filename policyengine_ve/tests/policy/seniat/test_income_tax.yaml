@@ -1,0 +1,105 @@
+# Venezuela Personal Income Tax Tests
+# Tax brackets are defined in Tax Units (TU)
+# TU value for 2025: 43 VES
+#
+# Brackets:
+# | Taxable Income (TU) | Rate  | Deduction (TU) |
+# | 0 - 1,000           | 6%    | 0              |
+# | 1,000 - 1,500       | 9%    | 30             |
+# | 1,500 - 2,000       | 12%   | 75             |
+# | 2,000 - 2,500       | 16%   | 155            |
+# | 2,500 - 3,000       | 20%   | 255            |
+# | 3,000 - 4,000       | 24%   | 375            |
+# | 4,000 - 6,000       | 29%   | 575            |
+# | 6,000+              | 34%   | 875            |
+#
+# Reference: https://taxsummaries.pwc.com/venezuela/individual/taxes-on-personal-income
+
+- name: Zero income results in zero tax
+  period: 2025
+  input:
+    employment_income: 0
+  output:
+    income_tax: 0
+
+- name: First bracket - 500 TU income (21,500 VES)
+  # 500 TU * 6% - 0 TU = 30 TU = 1,290 VES
+  period: 2025
+  input:
+    employment_income: 21500
+  output:
+    income_tax: 1290
+
+- name: First bracket - at boundary 1,000 TU income (43,000 VES)
+  # 1,000 TU * 6% - 0 TU = 60 TU = 2,580 VES
+  period: 2025
+  input:
+    employment_income: 43000
+  output:
+    income_tax: 2580
+
+- name: Second bracket - 1,200 TU income (51,600 VES)
+  # 1,200 TU * 9% - 30 TU = 108 - 30 = 78 TU = 3,354 VES
+  period: 2025
+  input:
+    employment_income: 51600
+  output:
+    income_tax: 3354
+
+- name: Third bracket - 1,750 TU income (75,250 VES)
+  # 1,750 TU * 12% - 75 TU = 210 - 75 = 135 TU = 5,805 VES
+  period: 2025
+  input:
+    employment_income: 75250
+  output:
+    income_tax: 5805
+
+- name: Fourth bracket - 2,300 TU income (98,900 VES)
+  # 2,300 TU * 16% - 155 TU = 368 - 155 = 213 TU = 9,159 VES
+  period: 2025
+  input:
+    employment_income: 98900
+  output:
+    income_tax: 9159
+
+- name: Fifth bracket - 2,800 TU income (120,400 VES)
+  # 2,800 TU * 20% - 255 TU = 560 - 255 = 305 TU = 13,115 VES
+  period: 2025
+  input:
+    employment_income: 120400
+  output:
+    income_tax: 13115
+
+- name: Sixth bracket - 3,500 TU income (150,500 VES)
+  # 3,500 TU * 24% - 375 TU = 840 - 375 = 465 TU = 19,995 VES
+  period: 2025
+  input:
+    employment_income: 150500
+  output:
+    income_tax: 19995
+
+- name: Seventh bracket - 5,000 TU income (215,000 VES)
+  # 5,000 TU * 29% - 575 TU = 1,450 - 575 = 875 TU = 37,625 VES
+  period: 2025
+  input:
+    employment_income: 215000
+  output:
+    income_tax: 37625
+
+- name: Eighth bracket (top) - 10,000 TU income (430,000 VES)
+  # 10,000 TU * 34% - 875 TU = 3,400 - 875 = 2,525 TU = 108,575 VES
+  period: 2025
+  input:
+    employment_income: 430000
+  output:
+    income_tax: 108575
+
+- name: Multiple income sources - employment and self-employment
+  # Total: 2,000 TU (86,000 VES) from employment + self-employment
+  # Tax: 2,000 TU * 12% - 75 TU = 240 - 75 = 165 TU = 7,095 VES
+  period: 2025
+  input:
+    employment_income: 43000
+    self_employment_income: 43000
+  output:
+    income_tax: 7095

@@ -1,0 +1,80 @@
+# Employee payroll tax tests for Venezuela
+# References:
+# - https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/venezuela.html
+# - https://www.cloudpay.com/payroll-guide/venezuela-payroll-and-benefits-guide/
+
+# Employee contributions:
+# - IVSS (Social Security): 4% of wages, capped at 5x minimum wage
+# - BANAVIH (Housing): 1% of wages, no cap
+# - Minimum wage: 130 VES/month, so annual cap = 130 * 5 * 12 = 7,800 VES
+
+- name: No income results in no payroll tax
+  period: 2025
+  input:
+    employment_income: 0
+  output:
+    ivss_employee_contribution: 0
+    banavih_employee_contribution: 0
+    employee_payroll_tax: 0
+
+- name: Low income - IVSS and BANAVIH both apply
+  period: 2025
+  input:
+    employment_income: 1000
+  output:
+    # IVSS: 4% of 1000 = 40
+    ivss_employee_contribution: 40
+    # BANAVIH: 1% of 1000 = 10
+    banavih_employee_contribution: 10
+    # Total: 50
+    employee_payroll_tax: 50
+
+- name: Moderate income below cap - full rates apply
+  period: 2025
+  input:
+    employment_income: 5000
+  output:
+    # IVSS: 4% of 5000 = 200
+    ivss_employee_contribution: 200
+    # BANAVIH: 1% of 5000 = 50
+    banavih_employee_contribution: 50
+    # Total: 250
+    employee_payroll_tax: 250
+
+- name: Income exactly at IVSS cap
+  period: 2025
+  input:
+    # IVSS cap = 5 * 130 * 12 = 7,800 VES/year
+    employment_income: 7800
+  output:
+    # IVSS: 4% of 7800 = 312 (exactly at cap)
+    ivss_employee_contribution: 312
+    # BANAVIH: 1% of 7800 = 78 (no cap)
+    banavih_employee_contribution: 78
+    # Total: 390
+    employee_payroll_tax: 390
+
+- name: Income above IVSS cap - IVSS capped but BANAVIH continues
+  period: 2025
+  input:
+    # Income above the 7,800 VES cap
+    employment_income: 10000
+  output:
+    # IVSS: 4% of 7800 (capped) = 312
+    ivss_employee_contribution: 312
+    # BANAVIH: 1% of 10000 = 100 (no cap)
+    banavih_employee_contribution: 100
+    # Total: 412
+    employee_payroll_tax: 412
+
+- name: High income - IVSS capped, BANAVIH uncapped
+  period: 2025
+  input:
+    employment_income: 50000
+  output:
+    # IVSS: 4% of 7800 (capped) = 312
+    ivss_employee_contribution: 312
+    # BANAVIH: 1% of 50000 = 500 (no cap)
+    banavih_employee_contribution: 500
+    # Total: 812
+    employee_payroll_tax: 812

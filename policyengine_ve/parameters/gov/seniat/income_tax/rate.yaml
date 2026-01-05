@@ -1,0 +1,59 @@
+description: SENIAT applies progressive tax rates to personal income, with 8 brackets ranging from 6% to 34%.
+metadata:
+  unit: /1
+  period: year
+  label: Personal income tax rate scale
+  threshold_unit: currency-VES-TU
+  rate_unit: /1
+  reference:
+    - title: PWC Venezuela Tax Summary - Taxes on personal income
+      href: https://taxsummaries.pwc.com/venezuela/individual/taxes-on-personal-income
+brackets:
+  - threshold:
+      values:
+        2000-01-01: 0
+    rate:
+      values:
+        2000-01-01: 0.06
+  - threshold:
+      values:
+        2000-01-01: 1000
+    rate:
+      values:
+        2000-01-01: 0.09
+  - threshold:
+      values:
+        2000-01-01: 1500
+    rate:
+      values:
+        2000-01-01: 0.12
+  - threshold:
+      values:
+        2000-01-01: 2000
+    rate:
+      values:
+        2000-01-01: 0.16
+  - threshold:
+      values:
+        2000-01-01: 2500
+    rate:
+      values:
+        2000-01-01: 0.20
+  - threshold:
+      values:
+        2000-01-01: 3000
+    rate:
+      values:
+        2000-01-01: 0.24
+  - threshold:
+      values:
+        2000-01-01: 4000
+    rate:
+      values:
+        2000-01-01: 0.29
+  - threshold:
+      values:
+        2000-01-01: 6000
+    rate:
+      values:
+        2000-01-01: 0.34

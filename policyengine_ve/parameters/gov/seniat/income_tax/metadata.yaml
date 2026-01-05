@@ -1,0 +1,6 @@
+description: Personal income tax (Impuesto Sobre la Renta - ISLR) parameters
+metadata:
+  label: Personal Income Tax
+  reference:
+    - title: PWC Venezuela Tax Summary - Taxes on personal income
+      href: https://taxsummaries.pwc.com/venezuela/individual/taxes-on-personal-income

@@ -1,0 +1,14 @@
+description: Venezuela provides this annual bonus to public administration and state enterprise retirees who hold the Carnet de la Patria.
+metadata:
+  unit: currency-VES
+  period: year
+  label: Public sector retiree annual bonus
+  reference:
+    - title: Venezuela Maduro Govt Announces May Day Bonus Increase
+      href: https://venezuelanalysis.com/news/venezuela-maduro-govt-announces-may-day-bonus-increase-maintains-wage-freeze/
+    - title: Venezuela's Minimum Comprehensive Income Announcements
+      href: https://misionverdad.com/english/venezuelas-minimum-comprehensive-income-announcements-thorough-reading
+
+values:
+  # $112/month x 12 months x 36 VES/USD = 48,384 VES/year
+  2025-01-01: 48384

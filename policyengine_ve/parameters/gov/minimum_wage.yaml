@@ -1,0 +1,13 @@
+description: Legal monthly minimum wage in Venezuela
+values:
+  2022-03-01: 130  # VES 130, approximately $3.50 USD at official rate
+  # Frozen since March 2022
+metadata:
+  unit: currency-VES
+  period: month
+  label: Minimum wage
+  reference:
+    - title: Venezuela Minimum Monthly Wages
+      href: https://tradingeconomics.com/venezuela/minimum-wages
+    - title: La Republica - Salario minimo
+      href: https://larepublica.pe/datos-lr/venezuela/2025/01/02/aumento-salarial-en-venezuela-2025-cual-seria-el-nuevo-monto-del-sueldo-minimo-segun-nicolas-maduro-lrtmv-167004
