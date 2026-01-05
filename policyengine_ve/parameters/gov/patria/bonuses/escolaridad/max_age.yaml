@@ -1,0 +1,7 @@
+description: Maximum age for school bonus eligibility (through secondary)
+metadata:
+  label: Maximum school age
+  unit: year
+  period: year
+values:
+  2020-01-01: 17

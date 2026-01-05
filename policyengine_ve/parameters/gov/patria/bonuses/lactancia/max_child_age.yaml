@@ -1,0 +1,7 @@
+description: Maximum age of child for lactancia materna eligibility
+metadata:
+  label: Maximum child age for breastfeeding bonus
+  unit: year
+  period: year
+values:
+  2020-01-01: 2

@@ -1,0 +1,7 @@
+description: Minimum age for school bonus eligibility (initial education)
+metadata:
+  label: Minimum school age
+  unit: year
+  period: year
+values:
+  2020-01-01: 3

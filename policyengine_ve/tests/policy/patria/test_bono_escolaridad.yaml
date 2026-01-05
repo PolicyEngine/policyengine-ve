@@ -1,0 +1,66 @@
+# Tests for Bono 100% Escolaridad (school bonus)
+# 446 Bs/month per child in school (ages 3-17), requires Carnet de la Patria
+# Reference: https://meridiano.net/servicios/bono-100-escolaridad-5-pasos-para-registrar-a-tu-hijo-y-recibir-bs-446-mensuales-por-nino-a-202551110300
+
+- name: Child age 10 in school with Carnet receives bonus
+  period: 2025
+  input:
+    age: 10
+    is_in_school: true
+    has_carnet_patria: true
+  output:
+    bono_escolaridad: 5352  # 446 * 12
+
+- name: Child age 10 in school without Carnet gets nothing
+  period: 2025
+  input:
+    age: 10
+    is_in_school: true
+    has_carnet_patria: false
+  output:
+    bono_escolaridad: 0
+
+- name: Child age 10 not in school gets nothing
+  period: 2025
+  input:
+    age: 10
+    is_in_school: false
+    has_carnet_patria: true
+  output:
+    bono_escolaridad: 0
+
+- name: Child age 2 (too young) gets nothing
+  period: 2025
+  input:
+    age: 2
+    is_in_school: true
+    has_carnet_patria: true
+  output:
+    bono_escolaridad: 0
+
+- name: Person age 18 (too old) gets nothing
+  period: 2025
+  input:
+    age: 18
+    is_in_school: true
+    has_carnet_patria: true
+  output:
+    bono_escolaridad: 0
+
+- name: Child age 3 (minimum age) eligible
+  period: 2025
+  input:
+    age: 3
+    is_in_school: true
+    has_carnet_patria: true
+  output:
+    bono_escolaridad: 5352
+
+- name: Child age 17 (maximum age) eligible
+  period: 2025
+  input:
+    age: 17
+    is_in_school: true
+    has_carnet_patria: true
+  output:
+    bono_escolaridad: 5352

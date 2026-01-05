@@ -24,7 +24,9 @@ def calculate_net_income_and_mtr(
     has_carnet_patria=True,
     is_retired=False,
     was_public_sector_retiree=False,
-    num_children=0,
+    num_school_children=0,
+    has_infant=False,
+    spouse_age=None,  # If set, adds a non-earning spouse
 ):
     """Calculate net income and MTR across an earnings range."""
     net_incomes = []
@@ -41,18 +43,41 @@ def calculate_net_income_and_mtr(
                 "is_retired": {2025: bool(is_retired)},
                 "is_employed": {2025: bool(not is_retired and earnings > 0)},
                 "was_public_sector_retiree": {2025: bool(was_public_sector_retiree)},
+                "is_male": {2025: True},
+                "has_child_under_2": {2025: bool(has_infant)},
             }
         }
         members = ["adult"]
 
-        # Add children if specified
-        for c in range(num_children):
+        # Add spouse if specified
+        if spouse_age is not None:
+            persons["spouse"] = {
+                "age": {2025: int(spouse_age)},
+                "employment_income": {2025: 0},
+                "is_male": {2025: False},
+                "has_carnet_patria": {2025: bool(has_carnet_patria)},
+                "has_child_under_2": {2025: bool(has_infant)},
+            }
+            members.append("spouse")
+
+        # Add school-age children
+        for c in range(num_school_children):
             child_id = f"child_{c}"
             persons[child_id] = {
-                "age": {2025: 5 + c * 3},
+                "age": {2025: 8 + c * 3},  # Ages 8, 11, 14...
                 "employment_income": {2025: 0},
+                "is_in_school": {2025: True},
+                "has_carnet_patria": {2025: bool(has_carnet_patria)},
             }
             members.append(child_id)
+
+        # Add infant if specified
+        if has_infant:
+            persons["infant"] = {
+                "age": {2025: 1},
+                "employment_income": {2025: 0},
+            }
+            members.append("infant")
 
         situation = {
             "persons": persons,
@@ -77,40 +102,52 @@ def calculate_net_income_and_mtr(
 
 def create_household_comparison_chart():
     """Create comparison chart for different household types."""
-    # Fine-grained earnings range to capture cliff (0-2000 VES)
+    # Earnings range capturing cliff and full income tax schedule
+    # Tax brackets go up to 6000 TU = 258,000 VES, so extend to 300,000
     earnings_range = np.concatenate(
         [
             np.linspace(0, MIN_WAGE_ANNUAL * 0.9, 20),
             np.linspace(MIN_WAGE_ANNUAL * 0.9, MIN_WAGE_ANNUAL * 1.1, 50),
-            np.linspace(MIN_WAGE_ANNUAL * 1.1, 2000, 30),
+            np.linspace(MIN_WAGE_ANNUAL * 1.1, 300_000, 200),
         ]
     )
 
-    # Household scenarios
+    # Household scenarios - showing cliffs and child benefits
     scenarios = [
         {
-            "name": "Elderly (65+), with Carnet",
+            "name": "Single Elderly (65+)",
             "params": {"age": 65, "has_carnet_patria": True},
             "color": "red",
         },
         {
-            "name": "Elderly (65+), no Carnet",
-            "params": {"age": 65, "has_carnet_patria": False},
-            "color": "orange",
+            "name": "Elderly Couple (both 65+) - SAME CLIFF!",
+            "params": {"age": 65, "spouse_age": 65, "has_carnet_patria": True},
+            "color": "darkred",
         },
         {
-            "name": "Working Age (35)",
+            "name": "Single Working Age",
             "params": {"age": 35, "has_carnet_patria": True},
             "color": "blue",
         },
         {
-            "name": "Public Sector Worker",
+            "name": "Family + 2 School Children",
             "params": {
                 "age": 35,
-                "is_public_sector": True,
+                "spouse_age": 33,
+                "num_school_children": 2,
                 "has_carnet_patria": True,
             },
             "color": "green",
+        },
+        {
+            "name": "Family + Infant (lactancia)",
+            "params": {
+                "age": 30,
+                "spouse_age": 28,
+                "has_infant": True,
+                "has_carnet_patria": True,
+            },
+            "color": "purple",
         },
     ]
 
@@ -119,7 +156,7 @@ def create_household_comparison_chart():
         rows=2,
         cols=1,
         subplot_titles=("Net Income vs Earnings", "Marginal Tax Rate"),
-        vertical_spacing=0.12,
+        vertical_spacing=0.18,
     )
 
     for scenario in scenarios:
@@ -174,28 +211,54 @@ def create_household_comparison_chart():
         col=1,
     )
 
-    # Update layout
+    # Update layout with USD axis on top of first subplot only
+    max_earnings = earnings_range.max()
+
+    # Create USD tick values aligned with VES
+    ves_ticks = np.linspace(0, max_earnings, 7)
+    usd_ticks = ves_ticks * VES_TO_USD
+
     fig.update_layout(
         title="Venezuela: Net Income and MTR by Household Type (2025)",
         height=800,
         showlegend=True,
         legend=dict(x=0.02, y=0.98),
     )
+
+    # VES axis labels on both charts
+    fig.update_xaxes(title_text="Annual Earnings (VES)", row=1, col=1)
     fig.update_xaxes(title_text="Annual Earnings (VES)", row=2, col=1)
     fig.update_yaxes(title_text="Net Income (VES)", row=1, col=1)
     fig.update_yaxes(title_text="MTR", tickformat=".0%", row=2, col=1)
+
+    # Add USD axis at the very top
+    fig.add_trace(
+        go.Scatter(x=[None], y=[None], xaxis="x2", showlegend=False),
+    )
+    fig.update_layout(
+        xaxis2=dict(
+            title="Annual Earnings (USD)",
+            side="top",
+            range=[0, max_earnings],
+            tickvals=ves_ticks,
+            ticktext=[f"${v:,.0f}" for v in usd_ticks],
+            anchor="free",
+            overlaying="x",
+            position=1.0,
+        ),
+    )
 
     return fig
 
 
 def create_cliff_detail_chart():
     """Create detailed chart showing the Amor Mayor cliff."""
-    # 0-2000 VES range with fine granularity around cliff
+    # Full range with fine granularity around cliff
     earnings_range = np.concatenate(
         [
             np.linspace(0, MIN_WAGE_ANNUAL * 0.9, 50),
             np.linspace(MIN_WAGE_ANNUAL * 0.9, MIN_WAGE_ANNUAL * 1.1, 100),
-            np.linspace(MIN_WAGE_ANNUAL * 1.1, 2000, 50),
+            np.linspace(MIN_WAGE_ANNUAL * 1.1, 300_000, 150),
         ]
     )
 
@@ -210,7 +273,7 @@ def create_cliff_detail_chart():
             "Net Income Around Cliff Threshold",
             "Marginal Tax Rate (Capped at 100%)",
         ),
-        vertical_spacing=0.12,
+        vertical_spacing=0.18,
     )
 
     # Net income
@@ -226,18 +289,6 @@ def create_cliff_detail_chart():
         col=1,
     )
 
-    # 45-degree line (no taxes/benefits)
-    fig.add_trace(
-        go.Scatter(
-            x=earnings_range,
-            y=earnings_range,
-            mode="lines",
-            name="45° Line (No Tax/Benefits)",
-            line=dict(color="gray", dash="dot"),
-        ),
-        row=1,
-        col=1,
-    )
 
     # MTR - capped at 1.0
     mtr_capped = np.clip(mtr, None, 1.0)
@@ -274,13 +325,39 @@ def create_cliff_detail_chart():
         col=1,
     )
 
+    max_earnings = earnings_range.max()
+
+    # Create USD tick values aligned with VES
+    ves_ticks = np.linspace(0, max_earnings, 7)
+    usd_ticks = ves_ticks * VES_TO_USD
+
     fig.update_layout(
         title="Gran Misión Amor Mayor: The Benefit Cliff",
         height=700,
     )
-    fig.update_xaxes(title_text="Annual Earnings (VES)")
+
+    # VES axis labels on both charts
+    fig.update_xaxes(title_text="Annual Earnings (VES)", row=1, col=1)
+    fig.update_xaxes(title_text="Annual Earnings (VES)", row=2, col=1)
     fig.update_yaxes(title_text="Net Income (VES)", row=1, col=1)
     fig.update_yaxes(title_text="MTR", tickformat=".0%", row=2, col=1)
+
+    # Add USD axis at the very top
+    fig.add_trace(
+        go.Scatter(x=[None], y=[None], xaxis="x2", showlegend=False),
+    )
+    fig.update_layout(
+        xaxis2=dict(
+            title="Annual Earnings (USD)",
+            side="top",
+            range=[0, max_earnings],
+            tickvals=ves_ticks,
+            ticktext=[f"${v:,.0f}" for v in usd_ticks],
+            anchor="free",
+            overlaying="x",
+            position=1.0,
+        ),
+    )
 
     return fig
 

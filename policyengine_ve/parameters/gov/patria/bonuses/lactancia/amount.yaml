@@ -1,0 +1,12 @@
+description: Monthly amount of the Lactancia Materna (breastfeeding) bonus
+metadata:
+  label: Breastfeeding bonus amount (monthly)
+  unit: currency-VES
+  period: month
+  reference:
+    - title: Bono Lactancia Materna
+      href: https://www.trosell.net/news/inicia_pago_del_bono_de_lactancia_materna/2025-03-02-1652
+values:
+  2020-01-01: 50
+  2024-01-01: 400
+  2025-01-01: 558

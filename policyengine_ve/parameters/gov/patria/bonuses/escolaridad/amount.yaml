@@ -1,0 +1,12 @@
+description: Monthly amount of the 100% Escolaridad (school) bonus per child
+metadata:
+  label: School bonus amount (per child, monthly)
+  unit: currency-VES
+  period: month
+  reference:
+    - title: Bono 100% Escolaridad
+      href: https://meridiano.net/servicios/bono-100-escolaridad-5-pasos-para-registrar-a-tu-hijo-y-recibir-bs-446-mensuales-por-nino-a-202551110300
+values:
+  2020-01-01: 50
+  2024-01-01: 300
+  2025-01-01: 446

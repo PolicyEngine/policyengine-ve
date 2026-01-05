@@ -72,6 +72,8 @@ class person_benefits(Variable):
     adds = [
         "sistema_patria_bonus",
         "gran_mision_amor_mayor",
+        "bono_escolaridad",
+        "bono_lactancia",
     ]
 
 

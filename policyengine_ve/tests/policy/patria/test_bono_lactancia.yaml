@@ -1,0 +1,39 @@
+# Tests for Bono Lactancia Materna (breastfeeding bonus)
+# 558 Bs/month for mothers with children under 2, requires Carnet de la Patria
+# Reference: https://www.trosell.net/news/inicia_pago_del_bono_de_lactancia_materna/2025-03-02-1652
+
+- name: Mother with child under 2 and Carnet receives bonus
+  period: 2025
+  input:
+    is_male: false
+    has_child_under_2: true
+    has_carnet_patria: true
+  output:
+    bono_lactancia: 6696  # 558 * 12
+
+- name: Mother with child under 2 without Carnet gets nothing
+  period: 2025
+  input:
+    is_male: false
+    has_child_under_2: true
+    has_carnet_patria: false
+  output:
+    bono_lactancia: 0
+
+- name: Mother without young child gets nothing
+  period: 2025
+  input:
+    is_male: false
+    has_child_under_2: false
+    has_carnet_patria: true
+  output:
+    bono_lactancia: 0
+
+- name: Father with child under 2 gets nothing (mothers only)
+  period: 2025
+  input:
+    is_male: true
+    has_child_under_2: true
+    has_carnet_patria: true
+  output:
+    bono_lactancia: 0
