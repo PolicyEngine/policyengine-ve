@@ -77,12 +77,12 @@ def calculate_net_income_and_mtr(
 
 def create_household_comparison_chart():
     """Create comparison chart for different household types."""
-    # Fine-grained earnings range to capture cliff
+    # Fine-grained earnings range to capture cliff (0-2000 VES)
     earnings_range = np.concatenate(
         [
             np.linspace(0, MIN_WAGE_ANNUAL * 0.9, 20),
             np.linspace(MIN_WAGE_ANNUAL * 0.9, MIN_WAGE_ANNUAL * 1.1, 50),
-            np.linspace(MIN_WAGE_ANNUAL * 1.1, 10_000, 30),
+            np.linspace(MIN_WAGE_ANNUAL * 1.1, 2000, 30),
         ]
     )
 
@@ -141,11 +141,12 @@ def create_household_comparison_chart():
             col=1,
         )
 
-        # MTR plot
+        # MTR plot (capped at 1.0)
+        mtr_capped = np.clip(mtr, None, 1.0)
         fig.add_trace(
             go.Scatter(
                 x=earnings_range,
-                y=mtr * 100,  # Convert to percentage
+                y=mtr_capped,
                 mode="lines",
                 name=scenario["name"],
                 line=dict(color=scenario["color"]),
@@ -182,16 +183,20 @@ def create_household_comparison_chart():
     )
     fig.update_xaxes(title_text="Annual Earnings (VES)", row=2, col=1)
     fig.update_yaxes(title_text="Net Income (VES)", row=1, col=1)
-    fig.update_yaxes(title_text="MTR (%)", row=2, col=1)
+    fig.update_yaxes(title_text="MTR", tickformat=".0%", row=2, col=1)
 
     return fig
 
 
 def create_cliff_detail_chart():
     """Create detailed chart showing the Amor Mayor cliff."""
-    # Very fine-grained around the cliff
-    earnings_range = np.linspace(
-        MIN_WAGE_ANNUAL * 0.8, MIN_WAGE_ANNUAL * 1.2, 200
+    # 0-2000 VES range with fine granularity around cliff
+    earnings_range = np.concatenate(
+        [
+            np.linspace(0, MIN_WAGE_ANNUAL * 0.9, 50),
+            np.linspace(MIN_WAGE_ANNUAL * 0.9, MIN_WAGE_ANNUAL * 1.1, 100),
+            np.linspace(MIN_WAGE_ANNUAL * 1.1, 2000, 50),
+        ]
     )
 
     net_income, mtr = calculate_net_income_and_mtr(
@@ -203,7 +208,7 @@ def create_cliff_detail_chart():
         cols=1,
         subplot_titles=(
             "Net Income Around Cliff Threshold",
-            "Marginal Tax Rate (Note: Infinite at Threshold)",
+            "Marginal Tax Rate (Capped at 100%)",
         ),
         vertical_spacing=0.12,
     )
@@ -234,12 +239,12 @@ def create_cliff_detail_chart():
         col=1,
     )
 
-    # MTR - clip extreme values for visualization
-    mtr_clipped = np.clip(mtr * 100, -100, 500)
+    # MTR - capped at 1.0
+    mtr_capped = np.clip(mtr, None, 1.0)
     fig.add_trace(
         go.Scatter(
             x=earnings_range,
-            y=mtr_clipped,
+            y=mtr_capped,
             mode="lines",
             name="MTR",
             line=dict(color="darkred", width=2),
@@ -275,7 +280,7 @@ def create_cliff_detail_chart():
     )
     fig.update_xaxes(title_text="Annual Earnings (VES)")
     fig.update_yaxes(title_text="Net Income (VES)", row=1, col=1)
-    fig.update_yaxes(title_text="MTR (%)", row=2, col=1)
+    fig.update_yaxes(title_text="MTR", tickformat=".0%", row=2, col=1)
 
     return fig
 
