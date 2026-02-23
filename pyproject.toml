@@ -31,6 +31,7 @@ dev = [
     "black>=23.0.0",
     "jupyter>=1.0.0",
     "plotly>=5.0.0",
+    "towncrier>=24.0.0",
 ]
 
 [tool.setuptools.packages.find]
@@ -38,3 +39,34 @@ include = ["policyengine_ve*"]
 
 [tool.black]
 line-length = 79
+
+[tool.towncrier]
+directory = "changelog.d"
+filename = "CHANGELOG.md"
+package_dir = "."
+title_format = "## {version}"
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "Breaking changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
