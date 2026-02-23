@@ -22,7 +22,9 @@ class hogares_patria_bonus(Variable):
     label = "Hogares de la Patria / Bono Único Familiar"
     unit = VES
     definition_period = YEAR
-    reference = "https://blog.patria.org.ve/bono-unico-familiar-noviembre-2025/"
+    reference = (
+        "https://blog.patria.org.ve/bono-unico-familiar-noviembre-2025/"
+    )
 
     def formula(person, period, parameters):
         # Eligibility is an input (soft scoring by Sistema Patria)
