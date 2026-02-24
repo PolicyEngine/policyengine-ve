@@ -42,7 +42,9 @@ def calculate_net_income_and_mtr(
                 "has_carnet_patria": {2025: bool(has_carnet_patria)},
                 "is_retired": {2025: bool(is_retired)},
                 "is_employed": {2025: bool(not is_retired and earnings > 0)},
-                "was_public_sector_retiree": {2025: bool(was_public_sector_retiree)},
+                "was_public_sector_retiree": {
+                    2025: bool(was_public_sector_retiree)
+                },
                 "is_male": {2025: True},
                 "has_child_under_2": {2025: bool(has_infant)},
             }
@@ -288,7 +290,6 @@ def create_cliff_detail_chart():
         row=1,
         col=1,
     )
-
 
     # MTR - capped at 1.0
     mtr_capped = np.clip(mtr, None, 1.0)

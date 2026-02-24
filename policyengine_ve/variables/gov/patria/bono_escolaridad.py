@@ -45,6 +45,8 @@ class bono_escolaridad(Variable):
 
     def formula(person, period, parameters):
         eligible = person("bono_escolaridad_eligible", period)
-        monthly_amount = parameters(period).gov.patria.bonuses.escolaridad.amount
+        monthly_amount = parameters(
+            period
+        ).gov.patria.bonuses.escolaridad.amount
         annual_amount = monthly_amount * 12
         return where(eligible, annual_amount, 0)

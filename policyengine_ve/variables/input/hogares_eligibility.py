@@ -20,4 +20,6 @@ class is_hogares_patria_eligible(Variable):
     label = "Whether the person is eligible for Hogares de la Patria"
     definition_period = YEAR
     default_value = False
-    reference = "https://blog.patria.org.ve/bono-unico-familiar-noviembre-2025/"
+    reference = (
+        "https://blog.patria.org.ve/bono-unico-familiar-noviembre-2025/"
+    )

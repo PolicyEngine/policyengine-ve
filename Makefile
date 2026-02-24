@@ -1,4 +1,4 @@
-.PHONY: install test format
+.PHONY: install test format changelog
 
 install:
 	pip install -e .[dev]
@@ -9,6 +9,10 @@ test:
 
 format:
 	black . -l 79
+
+changelog:
+	python .github/bump_version.py
+	towncrier build --yes --version $$(python -c "import re; print(re.search(r'version = \"(.+?)\"', open('pyproject.toml').read()).group(1))")
 
 debug:
 	jupyter notebook
