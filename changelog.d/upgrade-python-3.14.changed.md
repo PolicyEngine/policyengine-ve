@@ -1,0 +1,1 @@
+Added Python 3.14 support and dropped Python 3.10 support.
